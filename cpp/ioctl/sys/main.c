@@ -11,6 +11,7 @@ void Unload(PDRIVER_OBJECT pOurDriver)
 	RtlInitUnicodeString(&usSymboName, SYM_NAME);
 	IoDeleteSymbolicLink(&usSymboName);
 	IoDeleteDevice(pOurDriver->DeviceObject);
+	DbgPrint("tomxue: Unload() for ioctl test");
 }
 
 NTSTATUS IrpIOCTL(PDEVICE_OBJECT pOurDevice, PIRP pIrp)
@@ -63,5 +64,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pOurDriver, PUNICODE_STRING pOurRegistry)
 	IoCreateSymbolicLink(&usSymboName, &usDeviceName);
 	pOurDevice->Flags &= ~DO_DEVICE_INITIALIZING;
 	pOurDevice->Flags |= DO_BUFFERED_IO;
+
+	DbgPrint("tomxue: DriverEntry() for ioctl test");
 	return STATUS_SUCCESS;
 }
